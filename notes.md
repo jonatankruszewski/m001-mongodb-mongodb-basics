@@ -1,36 +1,483 @@
-### M001
+# M001
 
 ## CHAPTER 01
 
-# WELCOME TO M001
+### WELCOME TO M001
 
-**What is the mongoDB Database?**
+### Lecture: What is the mongoDB Database?
 
-- Database meaning a structured way to store data.
+- It is a Database, meaning a structured way to store data.
 - It is a NOSQL Database. It is organized, but not in row or columns.
 - NOSQL Document database. Data are stored in documents, and documents are stored in collections.
 
-**QUIZ: Why is MongoDB a NoSQL DataBase?**
+### QUIZ: Why is MongoDB a NoSQL DataBase?
 
-- [X] Because it does not utilize tables, rows and columns to organize data
-- [X] Because it uses a structured waty to store and access data
+- [x] Because it does not utilize tables, rows and columns to organize data
+- [x] Because it uses a structured waty to store and access data
 
-**What is a Document?**
+### What is a Document?
 
- - A way to organize and store data as a set of Field-Value pairs
- - A collection would contain multiple documents.
- - A DB would contain multiple collections.
+- A way to organize and store data as a set of Field-Value pairs
+- A collection would contain multiple documents.
+- A DB would contain multiple collections.
 
-**Quiz 1: What is the MongoDB Database?**
+### Quiz 1: What is the MongoDB Database?
 
-- [X] The MongoDB database is an organized way to store and access data.
+- [x] The MongoDB database is an organized way to store and access data.
 - [ ] MongoDB database organizes documents in rows and columns.
 - [ ] MongoDB's database uses tables of related data.
-- [X] MongoDB is a NoSQL database that uses documents to store data in an organized way.
+- [x] MongoDB is a NoSQL database that uses documents to store data in an organized way.
 
-**Quiz 1: What is a Document?**
+### Quiz 2: What is a Document?
 
-- [ ] Collections are documents that are organized in rows and columns.
-- [ ] Documents are made up of collections.
-- [ ] Collections are tables of documents and other collections.
-- [X] Collections consist of one or many documents.
+- [x] Collections are documents that are organized in rows and columns.
+- [x] Documents are made up of collections.
+- [x] Collections are tables of documents and other collections.
+- [x] Collections consist of one or many documents.
+
+### Quiz 3: What is a Document?
+
+- [x] Each field has a value associated with it.
+- [x] A field is a unique identifier for a specific datapoint.
+- [ ] Values do not have to be attached to fields, and can be stand alone data points.
+
+### Lecture: What is MongoDB Atlas?
+
+- Atlas cloud database is the DAAS
+- DB in the cloud
+- MongoDb used as core of Atlas for data storage and retrieval.
+- Can deploy clusters (groups of servers that sotre your data)
+- Clusters: Groups of servers that store your data. This servers are configured as a replica set. A set of a few connected mongodb instances that stores the same data. If anything happens to any of the instances, the data will still be available by the remianing working members of the replica set. Redundancy.
+- Atlas creates the clusters for you, simplyfing running and mantaining the DB.
+- Atlas costs $$ but there is a free version with some limits.
+
+### Quiz : What is Atlas?
+
+- [x] Atlas has many tools and services within it that are built specifically for the MongoDB Database.
+- [ ] MongoDB Database has the same functionality as Atlas, but without the friendly user interface.
+- [ ] Atlas is a MongoDB service that can work with any database, but in this course it will be used with MongoDB.
+- [x] They both are MongoDB products.
+
+### Lab: Create and Deploy an Atlas Cluster
+
+- Follow the steps to create a new cluster on mongodb Atlas.
+
+### Lecture: Atlas User Interface Overview
+
+- Connect: allows access from certain ips.
+- Create a user
+- Choose a connection method.
+- Visualize the data from the Data Explorer
+- Charm and Realm to be discussed afterwards.
+
+### Lecture: Introducing the InBrowser IDE
+
+- Top navigation panel: Access services like Charts and Realm.
+- Left navigation panel: Cluster management itself: Security, DB Access, etc.
+- Interaction with the cluster: Or with the shell, or with the Data Explorer (click on collections)
+
+### Lab: Connect to your Atlas Cluster
+
+- Create your cluster on Mongodb atlas.
+- Add IP: 0.0.0.0
+- Add User: m001-student. Password: m001-mongodb-basics
+- Create the user
+- Click on connect
+- Click on connect with the mongo shell
+- Grab the link. Should look like:
+
+  `mongo "mongodb+srv://something.something.mongodb.net/myFirstDatabase" --username m001-student`
+
+- Go back to the lab and paste it on the terminal
+- Input your password
+- Your terminal in the shell should look like something:
+
+  ```MongoDB Enterprise atlas-4phot5-shard-0:PRIMARY>```
+
+- Click on RUN TEST
+
+## CHAPTER 02
+
+### IMPORTING, EXPORTING AND QUERYING DATA
+
+### Lecture: How does MongoDB store data?
+
+- MongoDB uses Documents to store data.
+- Documents are visualized as JSON Files.
+- JSON: separated by commas, key value pairs, keys stringified. Starts and ends iwith {}. Keys-values are separated by colons. Can contain subdocuments nested.
+- Problems: Text-based, space consuming, limit on data types.
+- BSON: Binary JSON. Binary representation of JSON format.
+
+| PROP         | JSON                           | BSON                                                                       |
+| :----------- | :----------------------------- | :------------------------------------------------------------------------- |
+| Encoding     | UTF-8                          | Binary                                                                     |
+| Data Support | Strinb, boolean, number, array | String, Boolean, Number (Integer, Long, Float...), Array, Date, Raw Binary |
+| Readability  | Human and machine              | Machine Only                                                               |
+
+BSON provides additionaly speed and accesibility.
+
+### Quiz: What is a JSON?
+
+Which of the following documents is correct JSON?
+
+- [ ] {name : "Devi", age: 19, major: "Computer Science"}
+- [x] {"name" : "Devi", "age": 19, "major": "Computer Science"}
+- [ ] ["name" : "Devi", "age": 19, "major": "Computer Science"]
+
+### Quiz: JSON vs. BSON?
+
+Write BSON or JSON in the numbered blanks in the following sentences to make them true:
+
+- MongoDB stores data in **BSON**, and you can then view it in **JSON**
+- **BSON** is faster to parse and lighter to store than **JSON**
+- **JSON** supports fewer data types than **BSON**
+
+### Lecture: Importing and Exporting Data
+
+- You can export / import both as BSON or JSON. Choos BSON for speed if you don't need to visulize it. Choose JSON if so.
+
+| PROP   | JSON        | BSON         |
+| :----- | :---------- | :----------- |
+| IMPORT | mongoimport | mongorestore |
+| EXPORT | mongoexport | mongodump    |
+
+Exporting:
+
+- We will need a URI. URI: Uniform resource identifier.
+- Usage: mongo*export/dump* --uri:<mongodb_uri>
+- Mongodump by default will export to a dump folder. So, to see data, you will need to cd into dump, cd into the db name.
+- Mongoexport: you can pass a collection flag (--collection=sales) and a file name (--out:sales.json)
+
+Importing:
+
+- You need also the uri
+- You can also use the flag --drop
+
+### Quiz: Import and Export?
+
+Which of the following commands will add a collection that is stored in animals.json to an Atlas cluster?
+
+- [ ] mongoexport
+- [x] mongoimport
+- [ ] mongorestore
+- [ ] mongodump
+
+### Lecture: Data Explorer
+
+- Querying:
+- A) From the data explorer. Go to collections. You can create a DB or a collection. A namespace is a concatenation of a DB name and a collection: sample_training.companies.
+- B) Through the shell, Compass, or any other connection method.
+- Queryes should follow the JSON format.
+
+### Quiz: Data Explorer
+
+Problem:
+
+In the sample_training.trips collection a person with birth year 1961 took a trip that started at "Howard St & Centre St". What was the end station name for that trip?
+
+Copy and paste your answer from the Atlas UI to the response text box. The station name should be in a single set double quotes, exactly as it is in the Data Explorer.
+
+To solve:
+
+- Go to collections
+- Go to sample_training DB
+- Go to trips collections
+- In the filter input:
+  
+    ```{"birth year":1961, "start station name": "Howard St & Centre St"}```
+
+- You should get a document which ending station is "South End Ave & Liberty St"
+
+### Lecture: Find Command
+
+- To connect to the atlas cluster run ```mongo <mongo_uri>```
+- Admin: keeps track of users access to DBS.
+- Once connected, *show dbs* shows the db
+- You can use anyone of them by *use someDB*
+- To view the collections: *show collections*
+- To query a collection: db.*collectionName*.find({*query*})
+- Shell limits the view to 20 documents. To keep on looking, type it (iterate), which iterates through the cursor object (which is a pointer to a result of a query)
+- we can concatenate operations: db.collection.find().count()
+- db.collection.find().pretty() helps visualizing it on the shell.
+- An empty object in the find query would retrieve any document without a specific order.
+- The mongoshell is fully javascript interpreter.
+
+### Quiz: Find Command
+
+What does it do in the mongo shell?
+
+- [ ] Interferes with the task
+- [ ] Warns about imminent termination
+- [ ] it is not a mongo shell command
+- [X] Iterates through the cursor results
+
+### Quiz: The mongo shell
+
+Which of the following statements are true about the mongo shell?
+
+- [X] It allows you to interact with your MongoDB instance without using a Graphical User Interface
+- [X] It is a fully functioning JavaScript interpreter
+- [ ] mongo shell automatically returns an ordered list of results
+
+### Your Chapter 2 IDE space
+
+- Connection:
+```mongo "mongodb+srv://something.somethingelse.mongodb.net/myFirstDatabase" --username m001-student```
+- Input password: m001-mongodb-basics
+- cls
+- show dbs
+- use sample_training
+
+0. Using the sample_training.inspections collection find out how many inspections were conducted on Feb 20 2015.
+
+   ```js
+   db.inspections.find({"date":"Feb 20 2015"}).count()
+   ```
+
+   - Answer: 320 inspections
+1. Query the zips collection from the sample_training database to find all documents where the state is New York.
+
+   ```js
+   db.zips.find({"state": "NY"}).count()
+   ```
+
+   - Answer: 1596
+2. Iterate through the query results.
+
+      ```js
+      it
+      ```
+
+3. Find out how many ZIP codes there are in NY state.
+
+   ```js
+   db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
+   ```
+
+   - Answer: 1596
+
+4. What about the ZIP codes that are in NY but also in the city of Albany?
+
+   ```js
+   db.zips.aggregate([
+   {
+      '$match': {
+         'state': 'NY', 
+         'city': 'ALBANY'
+      }
+   }, {
+      '$count': 'Zip codes in Albany and NY'
+   }
+   ])
+   ```
+
+   - Answer: 7
+
+5. Make the cursor look more readable.
+   - .pretty()
+  
+## CHAPTER 3: CREATING AND UPDATING VALUES
+
+### Inserting New Documents - ObjectID
+
+- Create: both atlas, as well as as db.collection.insert/One()
+- _id is enforced by default to have a 12 byte value.
+
+### Quiz: Creating and manipulating data
+
+How does the value of _id get assigned to a document?
+
+- [ ] _id field values are sequential integer values.
+- [X] You can select a non ObjectId type value when inserting a new document, as long as that value is unique to this document.
+- [X] It is automatically generated as an ObjectId type value.
+- [ ] When a document is inserted a random field is picked to serve as the _id field.
+
+### Lecture: Inserting New Documents - insert() and errors
+
+- Inserting documents: mongoimport, mongorestore, insert, insertMany, upsert
+- .findOne(): good to understand the shape of the documents on a collection
+- db.collection.insert({...})
+- If we try to insert a document with an existing _id, it is going to throw an error (duplicate key error). nInserted: 0.
+- You can check mongoDB validation Schema
+
+### Quiz: Insert Error
+
+Select all true statements from the following list:
+
+- [ ] There is no way to ensure that duplicate records are not stored in MongoDB.
+- [X] If a document is inserted without a provided **_id** value, then the **_id** field and value will be automatically generated for the inserted document before insertion.
+- [ ] If a document is inserted without a provided _id value, then that document will fail to be inserted and cause a write error.
+- [ ] MongoDB can always store duplicate documents in the same collection regardless of the _id value.
+- [X] MongoDB can store duplicate documents in the same collection, as long as their _id values are different.
+
+### Lecture: Inserting New Documents - insert() order
+
+- Inserting documents: db.collection.insert([{},{},{}])
+- Will treive:
+
+```js
+   bulkWriteResut({
+      "writeErros":[],
+      "nInserted": 3
+      "nUpserted": 0,
+      "nMatched": 0,
+      "nModified": 0,
+      "nRemoved": 0,
+      "upserted": []
+   })
+  ```
+
+- When inserting many documents, if an error ocurrers, the documents afterwards wont be inserted.
+- To change that add this option at the end: {"ordered": false}.
+- Be carefull not to misstype the collection name. The default behaviour on MongoDB is to create it if it doesn't exist. Same for DBS.
+
+### Quiz: Insert Order
+
+Which of the following commands will successfully insert 3 new documents into an empty pets collection?
+
+- [X] ```db.pets.insert([{ "pet": "cat" }, { "pet": "dog" },{ "pet": "fish" }])```
+
+- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },{ "_id": 1, "pet": "dog" },
+                { "_id": 3, "pet": "fish" },
+                { "_id": 4, "pet": "snake" }], { "ordered": false })```
+
+- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
+                { "_id": 2, "pet": "dog" },
+                { "_id": 3, "pet": "fish" },
+                { "_id": 3, "pet": "snake" }])```
+  
+- [ ] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
+                { "_id": 1, "pet": "dog" },
+                { "_id": 3, "pet": "fish" },
+                { "_id": 4, "pet": "snake" }], { "ordered": true })```
+
+### Lecture: Updating Documents - Data Explorer
+
+- Just use the UI. Beware of selecting the right data type.
+
+### Quiz: Updating Documents
+
+MongoDB has a flexible data model, which means that you can have fields that contain documents, or arrays as their values.
+
+Select any invalid MongoDB documents from the given choices:
+
+- [ ] ```{ "_id": 1,
+  "pet": "cat",
+  "attributes": [ { "coat": "fur",
+                    "type": "soft" },
+                  { "defense": "claws",
+                    "location": "paws",
+                    "nickname": "murder mittens" } ],
+  "name": "Furball" }```
+
+- [ ] ```{ "_id": 1,
+  "pet": "cat",
+  "fur": "soft",
+  "claws": "sharp",
+  "name": "Furball" }```
+
+- [ ] ```{ "_id": 1,
+  "pet": "cat",
+  "attributes": { "coat": "soft fur",
+                  "paws": "cute but deadly" },
+  "name": "Furball" }```
+  
+- [X] None of the Above
+
+### Lecture: Updating Documents - mongo shell
+
+- Using MQL (mongo query language)
+- updateOne, updateMany.
+- With updateOne, the first document that matches will be updated.
+- updateMany will match ALL the documents that match that given query.
+- $set: updates a field or creates it if it doesn't exist.
+- $inc, $push
+
+### Quiz: Updating Documents in the shell
+
+Given a pets collection where each document has the following structure and fields:
+
+```js
+{
+ "_id": ObjectId("5ec414e5e722bb1f65a25451"),
+ "pet": "wolf",
+ "domestic?": false,
+ "diet": "carnivorous",
+ "climate": ["polar", "equatorial", "continental", "mountain"]
+}
+
+```
+
+Which of the following commands will add new fields to the updated documents?
+
+- [X] ```db.pets.updateMany({ "pet": "cat" },
+                   { "$push": { "climate": "continental",
+                                "look": "adorable" } })```
+- [ ] ```db.pets.updateMany({ "pet": "cat" },
+                   { "$set": { "domestic?": true, "diet": "mice" } })```
+- [X] ```db.pets.updateMany({ "pet": "cat" },
+                   { "$set": { "type": "dangerous",
+                               "look": "adorable" } })```
+- [ ] ```db.pets.updateMany({ "pet": "cat" },
+                   { "$set": { "climate": "continental" } })```
+
+### Lecture: Deleting Documents and Collections
+
+- deleteOne, deleteMany.
+- Deleteone only to be used with _id, since it is the only way to guarantee that you are taking the right one.
+- db.collection.drop() will drop the collection
+
+### Quiz 1: Deleting Documents
+
+The sample dataset contains a few databases that we will not use in this course. Clean up your Atlas cluster and get rid of all the collections in these databases:
+
+sample_analytics
+sample_geospatial
+sample_weatherdata
+
+Does removing all collections in a database also remove the database?
+
+- [X] Yes
+- [ ] No
+
+### Quiz 2: Deleting Documents
+
+Which of the following commands will delete a collection named villains?
+
+- [X] db.villains.drop()
+- [ ] db.villains.dropAll()
+- [ ] db.villains.delete()
+
+### IDE
+
+1. Get a random document from a collection
+
+   ```js
+   db.collection.findOne()
+   ```
+
+2. Copy this random document, and insert it back to the collection. Do you get
+   a "Duplicate Key" error?
+
+   - Answer: yes.
+
+3. Insert that document into the collection without the _id field to get a
+   successfull insert. Did it work?
+
+   - Answer: yes.
+
+Practice Question:
+
+People often confuse New York City as the capital of New York state, when in
+reality the capital of New York state is Albany.
+
+In the sample_training.zips collection add a boolean field "capital?" to all
+documents pertaining to Albany NY, and New York, NY. The value of the field
+should be true for all Albany documents and false for all New York documents.
+
+```js
+use sample_training
+db.zips.updateMany({"city":"Albany"},{$set:{"capital": true}})
+
+db.zips.updateMany({"city":"New York"},{$set:{"capital": false}})
+```
