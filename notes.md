@@ -481,3 +481,125 @@ db.zips.updateMany({"city":"Albany"},{$set:{"capital": true}})
 
 db.zips.updateMany({"city":"New York"},{$set:{"capital": false}})
 ```
+
+## CHAPTER 04
+
+### Lecture: Query Operators - Comparison
+
+- Update operators: $inc, $set, $unset
+- Enable to modify data in the DB.
+- $eq
+- $gt
+- $gte
+- $ne
+- $lt
+- $lte
+
+### LAB
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+How many documents in the sample_training.zips collection have fewer than 1000 people listed in the pop field?
+
+Copy/paste the exact numeric value of the result that you get into the response field.
+
+```js
+const pipeline = [
+  {
+    '$match': {
+      'pop': {
+        '$lt': 1000
+      }
+    }
+  }, {
+    '$count': 'amount'
+  }
+];
+
+use sample_training
+db.zips.aggregate(pipeline)
+```
+
+### LAB 2: COMPARISON OPERATORS
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+How many documents in the sample_training.zips collection have fewer than 1000 people listed in the pop field?
+
+Copy/paste the exact numeric value of the result that you get into the response field.
+
+```js
+const pipeline = [
+  {
+    '$match': {
+      'pop': {
+        '$lt': 1000
+      }
+    }
+  }, {
+    '$count': 'amount'
+  }
+];
+
+use sample_training
+db.zips.aggregate(pipeline)
+```
+
+
+### LAB 2: Comparison Operators
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+What is the difference between the number of people born in 1998 and the number of people born after 1998 in the sample_training.trips collection?
+
+Enter the exact numeric value of the result that you get into the response field.
+
+```js
+const pipeline = [
+  {
+    '$match': {
+      'birth year': {
+        '$gte': 1998
+      }
+    }
+  }, {
+    '$group': {
+      '_id': {
+        '$cond': {
+          'if': {
+            '$gt': [
+              '$birth year', 1998
+            ]
+          }, 
+          'then': 'greater than 1998', 
+          'else': '1998'
+        }
+      }, 
+      'count': {
+        '$sum': 1
+      }
+    }
+  }
+]
+
+use sample_training
+db.trips.aggregate(pipeline)
+```
+
+You will get 2 documents with the amount of them. The difference is **6**
+
+### LAB 3
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+Using the sample_training.routes collection find out which of the following statements will return all routes that have at least one stop in them?
+
+- [ ] ```db.routes.find({ "stops": { "$lt": 0 }}).pretty()```
+- [X] ```db.routes.find({ "stops": { "$ne": 0 }}).pretty()```
+- [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()```
+- [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
+
+ 
+
+
+
+
