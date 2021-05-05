@@ -108,11 +108,11 @@
 - Problems: Text-based, space consuming, limit on data types.
 - BSON: Binary JSON. Binary representation of JSON format.
 
-| PROP | JSON | BSON |
+| PROP         | JSON                           | BSON                                                                       |
 | :----------- | :----------------------------- | :------------------------------------------------------------------------- |
-| Encoding | UTF-8 | Binary |
+| Encoding     | UTF-8                          | Binary                                                                     |
 | Data Support | Strinb, boolean, number, array | String, Boolean, Number (Integer, Long, Float...), Array, Date, Raw Binary |
-| Readability | Human and machine | Machine Only |
+| Readability  | Human and machine              | Machine Only                                                               |
 
 BSON provides additionaly speed and accesibility.
 
@@ -136,10 +136,10 @@ Write BSON or JSON in the numbered blanks in the following sentences to make the
 
 - You can export / import both as BSON or JSON. Choos BSON for speed if you don't need to visulize it. Choose JSON if so.
 
-| PROP | JSON | BSON |
+| PROP   | JSON        | BSON         |
 | :----- | :---------- | :----------- |
 | IMPORT | mongoimport | mongorestore |
-| EXPORT | mongoexport | mongodump |
+| EXPORT | mongoexport | mongodump    |
 
 Exporting:
 
@@ -264,10 +264,10 @@ Which of the following statements are true about the mongo shell?
  '$match': {
  'state': 'NY', 
  'city': 'ALBANY'
- }
- }, {
+}
+}, {
  '$count': 'Zip codes in Albany and NY'
- }
+}
  ])
  ```
 
@@ -324,7 +324,7 @@ Select all true statements from the following list:
  "nModified": 0,
  "nRemoved": 0,
  "upserted": []
- })
+})
  ```
 
 - When inserting many documents, if an error ocurrers, the documents afterwards wont be inserted.
@@ -335,21 +335,21 @@ Select all true statements from the following list:
 
 Which of the following commands will successfully insert 3 new documents into an empty pets collection?
 
-- [X] ```db.pets.insert([{ "pet": "cat" }, { "pet": "dog" },{ "pet": "fish" }])```
+- [X] ```db.pets.insert([{ "pet": "cat"}, { "pet": "dog"},{ "pet": "fish"}])```
 
-- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },{ "_id": 1, "pet": "dog" },
- { "_id": 3, "pet": "fish" },
- { "_id": 4, "pet": "snake" }], { "ordered": false })```
+- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat"},{ "_id": 1, "pet": "dog"},
+ { "_id": 3, "pet": "fish"},
+ { "_id": 4, "pet": "snake"}], { "ordered": false})```
 
-- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
- { "_id": 2, "pet": "dog" },
- { "_id": 3, "pet": "fish" },
- { "_id": 3, "pet": "snake" }])```
+- [X] ```db.pets.insert([{ "_id": 1, "pet": "cat"},
+ { "_id": 2, "pet": "dog"},
+ { "_id": 3, "pet": "fish"},
+ { "_id": 3, "pet": "snake"}])```
  
-- [ ] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
- { "_id": 1, "pet": "dog" },
- { "_id": 3, "pet": "fish" },
- { "_id": 4, "pet": "snake" }], { "ordered": true })```
+- [ ] ```db.pets.insert([{ "_id": 1, "pet": "cat"},
+ { "_id": 1, "pet": "dog"},
+ { "_id": 3, "pet": "fish"},
+ { "_id": 4, "pet": "snake"}], { "ordered": true})```
 
 ### Lecture: Updating Documents - Data Explorer
 
@@ -363,24 +363,24 @@ Select any invalid MongoDB documents from the given choices:
 
 - [ ] ```{ "_id": 1,
  "pet": "cat",
- "attributes": [ { "coat": "fur",
- "type": "soft" },
+ "attributes": [{ "coat": "fur",
+ "type": "soft"},
  { "defense": "claws",
  "location": "paws",
- "nickname": "murder mittens" } ],
- "name": "Furball" }```
+ "nickname": "murder mittens"}],
+ "name": "Furball"}```
 
 - [ ] ```{ "_id": 1,
  "pet": "cat",
  "fur": "soft",
  "claws": "sharp",
- "name": "Furball" }```
+ "name": "Furball"}```
 
 - [ ] ```{ "_id": 1,
  "pet": "cat",
  "attributes": { "coat": "soft fur",
- "paws": "cute but deadly" },
- "name": "Furball" }```
+ "paws": "cute but deadly"},
+ "name": "Furball"}```
  
 - [X] None of the Above
 
@@ -410,16 +410,16 @@ Given a pets collection where each document has the following structure and fiel
 
 Which of the following commands will add new fields to the updated documents?
 
-- [X] ```db.pets.updateMany({ "pet": "cat" },
+- [X] ```db.pets.updateMany({ "pet": "cat"},
  { "$push": { "climate": "continental",
- "look": "adorable" } })```
-- [ ] ```db.pets.updateMany({ "pet": "cat" },
- { "$set": { "domestic?": true, "diet": "mice" } })```
-- [X] ```db.pets.updateMany({ "pet": "cat" },
+ "look": "adorable"}})```
+- [ ] ```db.pets.updateMany({ "pet": "cat"},
+ { "$set": { "domestic?": true, "diet": "mice"}})```
+- [X] ```db.pets.updateMany({ "pet": "cat"},
  { "$set": { "type": "dangerous",
- "look": "adorable" } })```
-- [ ] ```db.pets.updateMany({ "pet": "cat" },
- { "$set": { "climate": "continental" } })```
+ "look": "adorable"}})```
+- [ ] ```db.pets.updateMany({ "pet": "cat"},
+ { "$set": { "climate": "continental"}})```
 
 ### Lecture: Deleting Documents and Collections
 
@@ -509,11 +509,11 @@ const pipeline = [
  '$match': {
  'pop': {
  '$lt': 1000
- }
- }
- }, {
+}
+}
+}, {
  '$count': 'amount'
- }
+}
 ];
 
 use sample_training
@@ -529,17 +529,7 @@ How many documents in the sample_training.zips collection have fewer than 1000 p
 Copy/paste the exact numeric value of the result that you get into the response field.
 
 ```js
-const pipeline = [
- {
- '$match': {
- 'pop': {
- '$lt': 1000
- }
- }
- }, {
- '$count': 'amount'
- }
-];
+const pipeline = [{ '$match': { 'pop': { '$lt': 1000}}}, { '$count': 'amount'}];
 
 use sample_training
 db.zips.aggregate(pipeline)
@@ -559,9 +549,7 @@ const pipeline = [
  '$match': {
  'birth year': {
  '$gte': 1998
- }
- }
- }, {
+}}}, {
  '$group': {
  '_id': {
  '$cond': {
@@ -569,16 +557,16 @@ const pipeline = [
  '$gt': [
  '$birth year', 1998
  ]
- }, 
+}, 
  'then': 'greater than 1998', 
  'else': '1998'
- }
- }, 
+}
+}, 
  'count': {
  '$sum': 1
- }
- }
- }
+}
+}
+}
 ]
 
 use sample_training
@@ -593,10 +581,10 @@ To complete this exercise connect to your Atlas cluster using the in-browser IDE
 
 Using the sample_training.routes collection find out which of the following statements will return all routes that have at least one stop in them?
 
-- [ ] ```db.routes.find({ "stops": { "$lt": 0 }}).pretty()```
-- [X] ```db.routes.find({ "stops": { "$ne": 0 }}).pretty()```
-- [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()```
-- [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
+- [ ] ```db.routes.find({ "stops": { "$lt": 0}}).pretty()```
+- [X] ```db.routes.find({ "stops": { "$ne": 0}}).pretty()```
+- [X] ```db.routes.find({ "stops": { "$gt": 0}}).pretty()```
+- [ ] ```db.routes.find({ "stops": { "$gte": 0}}).pretty()```
 
  Lecture: Query Operator - Logic
  
@@ -620,9 +608,9 @@ Will return 4.
 
 Which is the most succinct query to return all documents from the sample_training.inspections collection where the inspection date is either "Feb 20 2015", or "Feb 21 2015" and the company is not part of the "Cigarette Retail Dealer - 127" sector?
 
-- [X] ```db.inspections.find( { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" } ], "sector": { "$ne": "Cigarette Retail Dealer - 127" }}).pretty()```
-- [ ] ```db.inspections.find( { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" }], "$not": { "sector": "Cigarette Retail Dealer - 127" }}).pretty()```
-- [ ] ```db.inspections.find( { "$and": [ { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" } ] }, {"s ector": { "$ne":"Cigarette Retail Dealer - 127" }}]}).pretty()```
+- [X] ```db.inspections.find( { "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}], "sector": { "$ne": "Cigarette Retail Dealer - 127"}}).pretty()```
+- [ ] ```db.inspections.find( { "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}], "$not": { "sector": "Cigarette Retail Dealer - 127"}}).pretty()```
+- [ ] ```db.inspections.find( { "$and": [{ "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}]}, {"s ector": { "$ne":"Cigarette Retail Dealer - 127"}}]}).pretty()```
 
 $not operator on this one is not used properly.
 
@@ -630,10 +618,10 @@ $not operator on this one is not used properly.
 
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
-Before solving this exercise, make sure to undo some of the changes that we made to the zips collection earlier in the course by running the following command:
+Before solving this exercise, make sure to undo some of the changes that we made to the zips collection ea rlier in the course by running the following command:
 
 ```js
-db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": -10 } })
+db.zips.updateMany({ "city": "HUDSON"}, { "$inc": { "pop": -10}})
 ```
 
 How many zips in the sample_training.zips dataset are neither over-populated nor under-populated?
@@ -641,6 +629,54 @@ How many zips in the sample_training.zips dataset are neither over-populated nor
 In this case, we consider population of more than 1,000,000 to be over- populated and less than 5,000 to be under-populated.
 
 Copy/paste the exact numeric value of the result that you get into the response field.
+
+```js
+
+db.zips.find({$nor:[{'pop':{$lt:5000}},{'pop':{$gt:1000000}}]}).count()
+
+```
+
+Another way:
+```js
+const pipeline = [
+  {
+    '$group': {
+      '_id': {
+        '$switch': {
+          'branches': [
+            {
+              'case': {
+                '$or': [
+                  {
+                    '$lt': [
+                      '$pop', 5000
+                    ]
+                  }, {
+                    '$gt': [
+                      '$pop', 1000000
+                    ]
+                  }
+                ]
+              }, 
+              'then': 'over and under Populated'
+            }
+          ], 
+          'default': 'well populated'
+        }
+      }, 
+      'amount': {
+        '$sum': 1
+      }
+    }
+  }
+]
+
+db.zips.aggregate(pipeline)
+
+```
+Should retrieve back **11193**.
+
+### Lab 2: Logic Operators
 
 
 
