@@ -808,25 +808,49 @@ Query Operators - Logic
    inspection result "Out of Business" and belong to the Home Improvement
    Contractor - 100 sector?
 
-   `
-2. How many zips in the sample_training.zips dataset are neither over-
-   populated nor under-populated?
+``` js 
+db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"}).count()
+```
+Answer: **4**
 
-   In this case, we consider population over 1,000,000 to be over-populated
-   and under 5,000 to be under-populated.
+2. How many zips in the sample_training.zips dataset are neither over-
+   populated nor under-populated?In this case, we consider population over 1,000,000 to be over-populated and under 5,000 to be under-populated.
+   
+   ```js
+   db.zips.find({pop:{$gte:5000, $lt:1000000}}).count()
+   ```
+Answer: **11193**
+
 3. How many companies in the sample_training.companies dataset were either
    founded in 2004, or in the month of October and either have the social
    category_code or web category_code?
+
+``` js
+db.companies.find({$or:[{founded_year: 2004}, {founded_month: 10}], $or:[{category_code:"social"}, {category_code: "web"}]}).count()
+
+```
+Answer: **1981**
 
 Expressive Query Operator
 
 How many companies in the sample_training.companies collection have the same
 permalink as their twitter_username?
 
+```js
+db.companies.find({$expr:{$eq:["$twitter_username", "$permalink"]}}).count()
+```
+Answer: **1299**
+
 Array Operators
 
 1. What is the name of the listing in the sample_airbnb.listingsAndReviews
    dataset accommodate more than 6 people and has exactly 50 reviews?
+
+   ```js
+    db.listingsAndReviews.find({accommodates:{$gt:6}, reviews:{$size:50}}, {name:1, _id:0})
+   ```
+Answer: **Sunset Beach Lodge Retreat**
+
 2. How many documents have the property_type House, and include Changing
    table as one of the amenities?
 
