@@ -235,42 +235,42 @@ Which of the following statements are true about the mongo shell?
  ```
 
 Answer: 320 inspections
-  
-   1. Query the zips collection from the sample_training database to find all documents where the state is New York.
 
-      ```js
-      db.zips.find({"state": "NY"}).count()
-      ```
+ 1. Query the zips collection from the sample_training database to find all documents where the state is New York.
 
-      Answer: 1596
+ ```js
+ db.zips.find({"state": "NY"}).count()
+ ```
 
-   2. Iterate through the query results.
+ Answer: 1596
 
-      ```js
-      it
-      ```
+ 2. Iterate through the query results.
 
-   3. Find out how many ZIP codes there are in NY state.
+ ```js
+ it
+ ```
 
-      ```js
-      db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
-      ```
+ 3. Find out how many ZIP codes there are in NY state.
 
-      - Answer: 1596
+ ```js
+ db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
+ ```
 
-   4. What about the ZIP codes that are in NY but also in the city of Albany?
+- Answer: 1596
 
-      ```js
-      db.zips.aggregate([ { '$match': { 'state': 'NY',  'city': 'ALBANY'}}, { '$count': 'Zip codes in Albany and NY'} ])
-      ```
+ 1. What about the ZIP codes that are in NY but also in the city of Albany?
 
-      Answer: 7
+ ```js
+ db.zips.aggregate([ { '$match': { 'state': 'NY', 'city': 'ALBANY'}}, { '$count': 'Zip codes in Albany and NY'} ])
+ ```
 
-   5. Make the cursor look more readable.
+ Answer: 7
 
-      ```js
-         .pretty()
-      ```
+ 5. Make the cursor look more readable.
+
+ ```js
+ .pretty()
+ ```
 
 ## CHAPTER 3: CREATING AND UPDATING VALUES
 
@@ -448,7 +448,7 @@ Which of the following commands will delete a collection named villains?
 
 2. Copy this random document, and insert it back to the collection. Do you get a "Duplicate Key" error?
 
-      - Answer: yes.
+    - Answer: yes.
 
 3. Insert that document into the collection without the _id field to get a
  successfull insert. Did it work?
@@ -644,7 +644,6 @@ Which of the following statements will find all the companies that have more emp
 - [x] ``` db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count() ```
 - [ ] ``` db.companies.find( { "$expr": { "$gt": [ "$founded_year", "number_of_employees" ] } }).count() ```
 - [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count() ```
-  
 - [ ] ``` db.companies.find({ "number_of_employees": { "$gt": "$founded_year" } }).count() ```
 
 Without the $expr, the last query doesn't know on which document look for $founded_year, so it will return 0.
@@ -785,23 +784,23 @@ Which of the following queries will return the names and addresses of all listin
 Query Operators - Comparison
 
 1. How many documents in the sample_training.zips collection have fewer than
-   1000 people listed in the pop field?
+ 1000 people listed in the pop field?
 
-   ```js
-    db.zips.find({"pop":{$lt: 1000}}).count()
-   ```
+ ```js
+ db.zips.find({"pop":{$lt: 1000}}).count()
+ ```
 
 2. What is the difference between the number of people born in 1998 and the
-   number of people born after 1998 in the sample_training.trips collection?
+ number of people born after 1998 in the sample_training.trips collection?
 
 ```js
-  db.trips.find({"birth year":1998}).count() // 12
-  db.trips.find({"birth year": {$gt:1998}}).count() // 18
+ db.trips.find({"birth year":1998}).count() // 12
+ db.trips.find({"birth year": {$gt:1998}}).count() // 18
  ```
 
 3. Using the sample_training.routes collection find out which of the
-   following statements will return all routes that have at least one stop
-   in them?
+ following statements will return all routes that have at least one stop
+ in them?
 
 - [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
@@ -811,8 +810,8 @@ Query Operators - Comparison
 Query Operators - Logic
 
 1. How many businesses in the sample_training.inspections dataset have the
-   inspection result "Out of Business" and belong to the Home Improvement
-   Contractor - 100 sector?
+ inspection result "Out of Business" and belong to the Home Improvement
+ Contractor - 100 sector?
 
 ``` js
 db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"}).count()
@@ -821,17 +820,17 @@ db.inspections.find({result: "Out of Business", sector:"Home Improvement Contrac
 Answer: **4**
 
 2. How many zips in the sample_training.zips dataset are neither over-
-   populated nor under-populated?In this case, we consider population over 1,000,000 to be over-populated and under 5,000 to be under-populated.
+ populated nor under-populated?In this case, we consider population over 1,000,000 to be over-populated and under 5,000 to be under-populated.
 
-   ```js
-   db.zips.find({pop:{$gte:5000, $lt:1000000}}).count()
-   ```
+ ```js
+ db.zips.find({pop:{$gte:5000, $lt:1000000}}).count()
+ ```
 
 Answer: **11193**
 
 3. How many companies in the sample_training.companies dataset were either
-   founded in 2004, or in the month of October and either have the social
-   category_code or web category_code?
+ founded in 2004, or in the month of October and either have the social
+ category_code or web category_code?
 
 ``` js
 db.companies.find({$or:[{founded_year: 2004}, {founded_month: 10}], $or:[{category_code:"social"}, {category_code: "web"}]}).count()
@@ -853,16 +852,16 @@ Answer: **1299**
 Array Operators
 
 1. What is the name of the listing in the sample_airbnb.listingsAndReviews
-   dataset accommodate more than 6 people and has exactly 50 reviews?
+ dataset accommodate more than 6 people and has exactly 50 reviews?
 
-   ```js
-    db.listingsAndReviews.find({accommodates:{$gt:6}, reviews:{$size:50}}, {name:1, _id:0})
-   ```
+ ```js
+ db.listingsAndReviews.find({accommodates:{$gt:6}, reviews:{$size:50}}, {name:1, _id:0})
+ ```
 
 Answer: **Sunset Beach Lodge Retreat**
 
 2. How many documents have the property_type House, and include Changing
-   table as one of the amenities?
+ table as one of the amenities?
 
 Array Operators and Projection
 
@@ -873,10 +872,10 @@ Array Operators and Sub-Documents
 
 1. Latitude decreases in value as you move west.
 
-   How many trips in the sample_training.trips collection started at
-   stations that are to the west of the -74 latitude coordinate?
+ How many trips in the sample_training.trips collection started at
+ stations that are to the west of the -74 latitude coordinate?
 2. How many inspections from the sample_training.inspections collection were
-   conducted in the city of New York?
+ conducted in the city of New York?
 
 ## CHAPTER 5
 
@@ -890,7 +889,7 @@ Array Operators and Sub-Documents
 - $group
 - Compute, reshape and reorganize data
 - In form of a pipeline
-  
+
 ### Lab: Aggregation Framework
 
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
@@ -924,3 +923,64 @@ What are the differences between using aggregate() and find()?
 - sort and limit are cursor methods as well as pretty and count
 - limit without sort doesn't guarantee any order
 - mongo asummes that you meant to sort before limit.
+
+### Quiz 1: sort() and limit()
+
+Which of the following commands will return the name and founding year for the 5 oldest companies in the sample_training.companies collection?
+
+Check all answers that apply:
+
+- [X] ``` db.companies.find({ "founded_year": { "$ne": null }}, { "name": 1, "founded_year": 1 } ).limit(5).sort({ "founded_year": 1 }) ```
+- [ ] ``` db.companies.find({ },{ "name": 1, "founded_year": 1 } ).sort({ "founded_year": 1 }).limit(5) ```
+- [X] ``` db.companies.find({ "founded_year": { "$ne": null }}, { "name": 1, "founded_year": 1 } ).sort({ "founded_year": 1 }).limit(5) ```
+- [ ] ``` db.companies.find({ "name": 1, "founded_year": 1 } ).sort({ "founded_year": 1 }).limit(5) ```
+
+Number 2 is not right because is not filtering null values (which this collection has)
+
+### QUIZ N2
+
+Problem:
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+In what year was the youngest bike rider from the sample_training.trips collection born?
+
+```js
+db.trips.find({"birth year": {$ne: ""}}, {"birth year": 1, _id: 0 }).sort({"birth year": -1}).limit(1)
+```
+
+- [ ] 1885
+- [X] 1999
+- [ ] 2000
+- [ ] 1998
+
+### Lecture: Introduction to Indexes
+
+- Indexes should be built to support the queries
+- db.col.createIndex( {field: 1/-1} )
+- Single field index.
+- Compound index.
+
+### Quiz: Introduction to Indexes
+
+Problem:
+Jameela often queries the sample_training.routes collection by the src_airport field like this:
+
+```js
+db.routes.find({ "src_airport": "MUC" }).pretty()
+```
+
+Which command will create an index that will support this query?
+
+- [ ] db.routes.generateIndex({ "src_airport": -1 })
+- [ ] db.routes.addIndex({ "src_airport": 1 })
+- [X] db.routes.createIndex({ "src_airport": -1 })
+- [ ] db.routes.makeIndex({ "src_airport": 1 })
+
+### Lecture: Introduction to Data Modeling
+
+- way to organize fields in a document to support your application performance and querying capabilities
+- Data is stored in the way that is used
+- How data is going to be queried?
+
+### QUIZ: Introduction to data modeling
