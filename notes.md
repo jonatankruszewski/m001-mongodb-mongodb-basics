@@ -526,7 +526,7 @@ What is the difference between the number of people born in 1998 and the number 
 Enter the exact numeric value of the result that you get into the response field.
 
 ```js
-const pipeline = [ { '$match': { 'birth year': { '$gte': 1998}}}, { '$group': { '_id': { '$cond': { 'if': { '$gt': [ '$birth year', 1998 ]},  'then': 'greater than 1998',  'else': '1998'}},  'count': { '$sum': 1}}}]
+const pipeline = [ { '$match': { 'birth year': { '$gte': 1998}}}, { '$group': { '_id': { '$cond': { 'if': { '$gt': [ '$birth year', 1998 ]}, 'then': 'greater than 1998', 'else': '1998'}}, 'count': { '$sum': 1}}}]
 use sample_training
 db.trips.aggregate(pipeline)
 ```
@@ -594,7 +594,7 @@ db.zips.find({$nor:[{'pop':{$lt:5000}},{'pop':{$gt:1000000}}]}).count()
 
 Another way:
 ```js
-const pipeline = [ { '$group': { '_id': { '$switch': { 'branches': [ { 'case': { '$or': [ { '$lt': [ '$pop', 5000  }, { '$gt':  '$pop', 1000000 ] } ] },  'then': 'over and under Populated' } ],  'default': 'well populated' } },  'amount': { '$sum': 1 } }]
+const pipeline = [ { '$group': { '_id': { '$switch': { 'branches': [ { 'case': { '$or': [ { '$lt': [ '$pop', 5000 }, { '$gt': '$pop', 1000000 ] } ] }, 'then': 'over and under Populated' } ], 'default': 'well populated' } }, 'amount': { '$sum': 1 } }]
 db.zips.aggregate(pipeline)
 ```
 Should retrieve back **11193**.
@@ -683,5 +683,80 @@ Copy/Paste the value of the "name" field into the response field without quotati
 ```js
 db.listingsAndReviews.find({reviews:{$size:50}, accommodates:{$gt:6}}, {_id:0, name:1})
 ```
+### LAB 2: Array Operators
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+Using the sample_airbnb.listingsAndReviews collection find out how many documents have the "property_type" "House", and include "Changing table" as one of the "amenities"?
+
+Enter the number of results to the response field.
+
+```js
+db.listingsAndReviews.find({"property_type":"House", "amenities":{$in:['Changing table']}}).count()
+```
+
+Answer: **11**
+
+### Quiz: Array Operators
+Which of the following queries will return all listings that have "Free parking on premises", "Air conditioning", and "Wifi" as part of their amenities, and have at least 2 bedrooms in the sample_airbnb.listingsAndReviews collection?
+
+
+- [ ] ``` db.listingsAndReviews.find( { "amenities": "Free parking on premises", "amenities": "Wifi", "amenities": "Air conditioning", "bedrooms": { "$gte": 2 } }).pretty()``` 
+- [ ] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$lte": 2 } }).pretty()```
+- [X] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$gte": 2 } } ).pretty()```
+- [ ] ``` db.listingsAndReviews.find( { "amenities": [ "Free parking on premises", "Wifi", "Air conditioning" ]}, "bedrooms": { "$gte": 2 } } ).pretty()```
+
+### Lecture: Array Operators and Projection
+
+- Projection: allows to look only into fields that we are interested on.
+- Fields you want, 1. Fields you don't want: 0.
+- _id is added by default.
+- Projecting with 0 a key, will trhow an error, since we can't mix inclusion and exclusion
+ $elemMatch can be used in the projetion part of the query.
+ matches documents that contain an array field with at leas one element that meets the conditions.
+
+ ### Lab: Array Operators and Projection
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+How many companies in the sample_training.companies collection have offices in the city of Seattle?
+
+Copy/paste your answer to the response field.
+
+``` js
+db.companies.find({offices: {$elemMatch: {"city":"Seattle"}}}).count()
+```
+
+Answer: **117**
+
+### Quiz: Array Operators and Projection
+Which of the following queries will return only the names of companies from the sample_training.companies collection that had exactly 8 funding rounds?
+
+- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 0, "_id": 1 })```
+- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1 })```
+- [X] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1, "_id": 0 })```
+
+### Lecture: Array Operators and Sub-Documents
+- Querying subdocuments.
+- Dot notation.
+- {"something.something": "lookedvalue"}
+- Also can access arrays by index
+
+### Lab 1: Querying Arrays and Sub-Documents
+ 
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+Longitude decreases in value as you move west.
+
+How many trips in the sample_training.trips collection started at stations that are to the west of the -74 longitude coordinate?
+
+```js
+db.trips.find({"start station location.coordinates.0": {$lt:-74}}).count()
+```
+Answer: **1928**
+
+### Lab 2: Querying Arrays and Sub-Documents
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+How many inspections from the sample_training.inspections collection were conducted in the city of NEW YORK?
 
 
