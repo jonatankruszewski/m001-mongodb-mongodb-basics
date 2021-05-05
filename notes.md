@@ -108,11 +108,11 @@
 - Problems: Text-based, space consuming, limit on data types.
 - BSON: Binary JSON. Binary representation of JSON format.
 
-| PROP         | JSON                           | BSON                                                                       |
+| PROP | JSON | BSON |
 | :----------- | :----------------------------- | :------------------------------------------------------------------------- |
-| Encoding     | UTF-8                          | Binary                                                                     |
+| Encoding | UTF-8 | Binary |
 | Data Support | Strinb, boolean, number, array | String, Boolean, Number (Integer, Long, Float...), Array, Date, Raw Binary |
-| Readability  | Human and machine              | Machine Only                                                               |
+| Readability | Human and machine | Machine Only |
 
 BSON provides additionaly speed and accesibility.
 
@@ -136,10 +136,10 @@ Write BSON or JSON in the numbered blanks in the following sentences to make the
 
 - You can export / import both as BSON or JSON. Choos BSON for speed if you don't need to visulize it. Choose JSON if so.
 
-| PROP   | JSON        | BSON         |
+| PROP | JSON | BSON |
 | :----- | :---------- | :----------- |
 | IMPORT | mongoimport | mongorestore |
-| EXPORT | mongoexport | mongodump    |
+| EXPORT | mongoexport | mongodump |
 
 Exporting:
 
@@ -639,36 +639,36 @@ db.zips.find({$nor:[{'pop':{$lt:5000}},{'pop':{$gt:1000000}}]}).count()
 Another way:
 ```js
 const pipeline = [
-  {
-    '$group': {
-      '_id': {
-        '$switch': {
-          'branches': [
-            {
-              'case': {
-                '$or': [
-                  {
-                    '$lt': [
-                      '$pop', 5000
-                    ]
-                  }, {
-                    '$gt': [
-                      '$pop', 1000000
-                    ]
-                  }
-                ]
-              }, 
-              'then': 'over and under Populated'
-            }
-          ], 
-          'default': 'well populated'
-        }
-      }, 
-      'amount': {
-        '$sum': 1
-      }
-    }
-  }
+ {
+ '$group': {
+ '_id': {
+ '$switch': {
+ 'branches': [
+ {
+ 'case': {
+ '$or': [
+ {
+ '$lt': [
+ '$pop', 5000
+ ]
+ }, {
+ '$gt': [
+ '$pop', 1000000
+ ]
+ }
+ ]
+ }, 
+ 'then': 'over and under Populated'
+ }
+ ], 
+ 'default': 'well populated'
+ }
+ }, 
+ 'amount': {
+ '$sum': 1
+ }
+ }
+ }
 ]
 
 db.zips.aggregate(pipeline)
@@ -698,4 +698,31 @@ Without the $and:
 ```js
 db.companies.find({"$or": [{"founded_year":2004}, {"founded_month":10}], "category_code": {"$in":["social", "web"]}}).count()
 ```
+
+### Lecture: Expressive Query Operator
+
+Allows to compare fields within the same documents.without specyfing its value.
+
+{$expr:{expression}}
+- Dolar sign is used to indicate the value of a field $pop, is the value at pop.
+
+### Quiz 1: $expr
+
+What are some of the uses for the $ sign in MQL?
+- [ ] $ makes the world go round.
+- [X] $ signifies that you are looking at the value of that field rather than the field name.
+- [X] $ denotes an operator.
+- [ ] $ changes the data type of the given value to a monetary denomination.
+
+
+### Quiz 2: $expr
+
+Which of the following statements will find all the companies that have more employees than the year in which they were founded?
+
+- [X] ``` db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count() ```
+- [ ] ``` db.companies.find( { "$expr": { "$gt": [ "$founded_year", "number_of_employees" ] } }).count() ```
+- [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count()```
+- [ ] ``` db.companies.find({ "number_of_employees": { "$gt": "$founded_year" } }).count() ```
+
+Without the $expr, the last query doesn't know on which document look for $founded_year, so it will return 0.
 
