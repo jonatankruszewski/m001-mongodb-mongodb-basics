@@ -984,3 +984,49 @@ Which command will create an index that will support this query?
 - How data is going to be queried?
 
 ### QUIZ: Introduction to data modeling
+
+- [ ] a way to decide whether to store your data in the cloud or locally
+- [ ] a way to show off your amazing data to everyone using graphs and illustrations
+- [x] a way to organize fields in a document to support your application performance and querying capabilities
+- [ ] a way to build your application based on how your data is stored
+
+### Lecture: Upsert - Update or insert
+
+- db.collection.updateOne({query},{update}, {upsert: true})
+- Update(if exists) or insert (if no documents matches)
+- Case of use: sensor that writes info in a document
+  
+### QUIZ: Upsert
+
+How does the upsert option work?
+
+- [X] By default upsert is set to false.
+- [X] When upsert is set to false and the query predicate returns an empty cursor then there will be no updated documents as a result of this operation.
+- [X] When upsert is set to true and the query predicate returns an empty cursor, the update operation creates a new document using the directive from the query predicate and the update predicate.
+- [ ] It is used with the update operator, and needs to have its value specified every time that the update operator is called.
+
+### Chapter 5 IDE
+
+Aggregation Framework
+
+1. Using the aggregation framework find all documents that have Wifi as one
+   of the amenities. Only include price and address in the resulting cursor.
+
+2. Which countries have listings in the sample_airbnb database?
+3. How many countries have listings in the sample_airbnb database?
+
+sort() and limit()
+
+1. Find the least populated ZIP code in the zips collection.
+2. Find the most populated ZIP code in the zips collection.
+3. Find the top ten most populated ZIP codes.
+4. Get results sorted in increasing order by population, and decreasing
+   order by city name.
+
+Introduction to Indexes
+
+Create two separate indxes to support the following queries:
+
+db.trips.find({"birth year": 1989})
+
+db.trips.find({"start station id": 476}).sort("birth year": 1)
