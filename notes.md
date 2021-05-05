@@ -677,8 +677,25 @@ db.zips.aggregate(pipeline)
 Should retrieve back **11193**.
 
 ### Lab 2: Logic Operators
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
+How many companies in the sample_training.companies dataset were
 
+either founded in 2004
 
+[ and ] either have the social category_code [ or ] web category_code,
+[ or ] were founded in the month of October
 
+[ and ] also either have the social category_code [ or ] web category_code?
+Copy/paste the exact numeric value of the result that you get into the response field.
+
+```js
+db.companies.find({$and: [{"$or": [{"founded_year":2004}, {"founded_month":10}]}, {"category_code": {"$in":["social", "web"]}}]}).count()
+```
+
+Without the $and:
+
+```js
+db.companies.find({"$or": [{"founded_year":2004}, {"founded_month":10}], "category_code": {"$in":["social", "web"]}}).count()
+```
 
