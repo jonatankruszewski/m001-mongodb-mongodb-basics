@@ -649,3 +649,39 @@ Which of the following statements will find all the companies that have more emp
 
 Without the $expr, the last query doesn't know on which document look for $founded_year, so it will return 0.
 
+### Lab: $expr
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+How many companies in the sample_training.companies collection have the same permalink as their twitter_username?
+
+```js
+db.companies.find({$expr:{$eq:['$permalink', '$twitter_username']}}).count()
+```
+Answer: **1299**
+
+### Lecture: Array Operators
+- $push. Adds an element to array or turns a field into an array if it has a different type.
+
+{"amenities":"shampoo"} // will retrieve also the elements that amenities is an array and contains the word shampoo.
+
+{"amenities":[ "shampoo" ]} // will retrieve all documents that matches EXACTLY that array (order of elements also important)
+
+That is why we have the $all, $in operators.
+
+$size: matches the size of an array.
+
+### Lab 1: Array Operators
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+What is the name of the listing in the sample_airbnb.listingsAndReviews dataset that accommodates more than 6 people and has exactly 50 reviews?
+
+Copy/Paste the value of the "name" field into the response field without quotation marks.
+
+
+```js
+db.listingsAndReviews.find({reviews:{$size:50}, accommodates:{$gt:6}}, {_id:0, name:1})
+```
+
+
