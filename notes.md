@@ -544,7 +544,7 @@ Using the sample_training.routes collection find out which of the following stat
 - [X] ```db.routes.find({ "stops": { "$gt": 0}}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$gte": 0}}).pretty()```
 
- Lecture: Query Operator - Logic
+ ### Lecture: Query Operator - Logic
  
  $and: All of the query clauses - present on queries by default.
  $or: any of the query clauses
@@ -642,7 +642,10 @@ What are some of the uses for the $ sign in MQL?
 
 Which of the following statements will find all the companies that have more employees than the year in which they were founded?
 
-- [X] ``` db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count() ```
+- [X]
+```js
+ db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count()
+```
 - [ ] ``` db.companies.find( { "$expr": { "$gt": [ "$founded_year", "number_of_employees" ] } }).count() ```
 - [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count()```
 - [ ] ``` db.companies.find({ "number_of_employees": { "$gt": "$founded_year" } }).count() ```
