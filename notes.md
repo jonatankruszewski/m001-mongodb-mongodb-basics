@@ -183,7 +183,7 @@ To solve:
 - Go to sample_training DB
 - Go to trips collections
 - In the filter input:
- 
+
  ```{"birth year":1961, "start station name": "Howard St & Centre St"}```
 
 - You should get a document which ending station is "South End Ave & Liberty St"
@@ -228,54 +228,50 @@ Which of the following statements are true about the mongo shell?
 - show dbs
 - use sample_training
 
-0. Using the sample_training.inspections collection find out how many inspections were conducted on Feb 20 2015.
+1. Using the sample_training.inspections collection find out how many inspections were conducted on Feb 20 2015.
 
  ```js
  db.inspections.find({"date":"Feb 20 2015"}).count()
  ```
 
- - Answer: 320 inspections
-1. Query the zips collection from the sample_training database to find all documents where the state is New York.
+Answer: 320 inspections
+  
+   1. Query the zips collection from the sample_training database to find all documents where the state is New York.
 
- ```js
- db.zips.find({"state": "NY"}).count()
- ```
+      ```js
+      db.zips.find({"state": "NY"}).count()
+      ```
 
- - Answer: 1596
-2. Iterate through the query results.
+      Answer: 1596
 
- ```js
- it
- ```
+   2. Iterate through the query results.
 
-3. Find out how many ZIP codes there are in NY state.
+      ```js
+      it
+      ```
 
- ```js
- db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
- ```
+   3. Find out how many ZIP codes there are in NY state.
 
- - Answer: 1596
+      ```js
+      db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
+      ```
 
-4. What about the ZIP codes that are in NY but also in the city of Albany?
+      - Answer: 1596
 
- ```js
- db.zips.aggregate([
- {
- '$match': {
- 'state': 'NY', 
- 'city': 'ALBANY'
-}
-}, {
- '$count': 'Zip codes in Albany and NY'
-}
- ])
- ```
+   4. What about the ZIP codes that are in NY but also in the city of Albany?
 
- - Answer: 7
+      ```js
+      db.zips.aggregate([ { '$match': { 'state': 'NY',  'city': 'ALBANY'}}, { '$count': 'Zip codes in Albany and NY'} ])
+      ```
 
-5. Make the cursor look more readable.
- - .pretty()
- 
+      Answer: 7
+
+   5. Make the cursor look more readable.
+
+      ```js
+         .pretty()
+      ```
+
 ## CHAPTER 3: CREATING AND UPDATING VALUES
 
 ### Inserting New Documents - ObjectID
@@ -345,7 +341,7 @@ Which of the following commands will successfully insert 3 new documents into an
  { "_id": 2, "pet": "dog"},
  { "_id": 3, "pet": "fish"},
  { "_id": 3, "pet": "snake"}])```
- 
+
 - [ ] ```db.pets.insert([{ "_id": 1, "pet": "cat"},
  { "_id": 1, "pet": "dog"},
  { "_id": 3, "pet": "fish"},
@@ -381,7 +377,7 @@ Select any invalid MongoDB documents from the given choices:
  "attributes": { "coat": "soft fur",
  "paws": "cute but deadly"},
  "name": "Furball"}```
- 
+
 - [X] None of the Above
 
 ### Lecture: Updating Documents - mongo shell
@@ -450,15 +446,14 @@ Which of the following commands will delete a collection named villains?
  db.collection.findOne()
  ```
 
-2. Copy this random document, and insert it back to the collection. Do you get
- a "Duplicate Key" error?
+2. Copy this random document, and insert it back to the collection. Do you get a "Duplicate Key" error?
 
- - Answer: yes.
+      - Answer: yes.
 
 3. Insert that document into the collection without the _id field to get a
  successfull insert. Did it work?
 
- - Answer: yes.
+    - Answer: yes.
 
 Practice Question:
 
@@ -517,8 +512,8 @@ use sample_training
 db.zips.aggregate(pipeline)
 ```
 
-
 ### LAB 2: Comparison Operators
+
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
 What is the difference between the number of people born in 1998 and the number of people born after 1998 in the sample_training.trips collection?
@@ -544,8 +539,8 @@ Using the sample_training.routes collection find out which of the following stat
 - [X] ```db.routes.find({ "stops": { "$gt": 0}}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$gte": 0}}).pretty()```
 
- ### Lecture: Query Operator - Logic
- 
+### Lecture: Query Operator - Logic
+
  $and: All of the query clauses - present on queries by default.
  $or: any of the query clauses
  $nor: fails to match both clauses (not and or together)
@@ -593,13 +588,16 @@ db.zips.find({$nor:[{'pop':{$lt:5000}},{'pop':{$gt:1000000}}]}).count()
 ```
 
 Another way:
+
 ```js
 const pipeline = [ { '$group': { '_id': { '$switch': { 'branches': [ { 'case': { '$or': [ { '$lt': [ '$pop', 5000 }, { '$gt': '$pop', 1000000 ] } ] }, 'then': 'over and under Populated' } ], 'default': 'well populated' } }, 'amount': { '$sum': 1 } }]
 db.zips.aggregate(pipeline)
 ```
+
 Should retrieve back **11193**.
 
 ### Lab 2: Logic Operators
+
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
 How many companies in the sample_training.companies dataset were
@@ -627,16 +625,17 @@ db.companies.find({"$or": [{"founded_year":2004}, {"founded_month":10}], "catego
 Allows to compare fields within the same documents.without specyfing its value.
 
 {$expr:{expression}}
+
 - Dolar sign is used to indicate the value of a field $pop, is the value at pop.
 
 ### Quiz 1: $expr
 
 What are some of the uses for the $ sign in MQL?
+
 - [ ] $ makes the world go round.
 - [X] $ signifies that you are looking at the value of that field rather than the field name.
 - [X] $ denotes an operator.
 - [ ] $ changes the data type of the given value to a monetary denomination.
-
 
 ### Quiz 2: $expr
 
@@ -644,7 +643,8 @@ Which of the following statements will find all the companies that have more emp
 
 - [x] ``` db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count() ```
 - [ ] ``` db.companies.find( { "$expr": { "$gt": [ "$founded_year", "number_of_employees" ] } }).count() ```
-- [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count()```
+- [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count() ```
+  
 - [ ] ``` db.companies.find({ "number_of_employees": { "$gt": "$founded_year" } }).count() ```
 
 Without the $expr, the last query doesn't know on which document look for $founded_year, so it will return 0.
@@ -658,9 +658,11 @@ How many companies in the sample_training.companies collection have the same per
 ```js
 db.companies.find({$expr:{$eq:['$permalink', '$twitter_username']}}).count()
 ```
+
 Answer: **1299**
 
 ### Lecture: Array Operators
+
 - $push. Adds an element to array or turns a field into an array if it has a different type.
 
 {"amenities":"shampoo"} // will retrieve also the elements that amenities is an array and contains the word shampoo.
@@ -679,10 +681,10 @@ What is the name of the listing in the sample_airbnb.listingsAndReviews dataset 
 
 Copy/Paste the value of the "name" field into the response field without quotation marks.
 
-
 ```js
 db.listingsAndReviews.find({reviews:{$size:50}, accommodates:{$gt:6}}, {_id:0, name:1})
 ```
+
 ### LAB 2: Array Operators
 
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
@@ -698,13 +700,13 @@ db.listingsAndReviews.find({"property_type":"House", "amenities":{$in:['Changing
 Answer: **11**
 
 ### Quiz: Array Operators
+
 Which of the following queries will return all listings that have "Free parking on premises", "Air conditioning", and "Wifi" as part of their amenities, and have at least 2 bedrooms in the sample_airbnb.listingsAndReviews collection?
 
-
-- [ ] ``` db.listingsAndReviews.find( { "amenities": "Free parking on premises", "amenities": "Wifi", "amenities": "Air conditioning", "bedrooms": { "$gte": 2 } }).pretty()``` 
-- [ ] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$lte": 2 } }).pretty()```
-- [X] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$gte": 2 } } ).pretty()```
-- [ ] ``` db.listingsAndReviews.find( { "amenities": [ "Free parking on premises", "Wifi", "Air conditioning" ]}, "bedrooms": { "$gte": 2 } } ).pretty()```
+- [ ] ``` db.listingsAndReviews.find( { "amenities": "Free parking on premises", "amenities": "Wifi", "amenities": "Air conditioning", "bedrooms": { "$gte": 2 } }).pretty() ```
+- [ ] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$lte": 2 } }).pretty() ```
+- [X] ``` db.listingsAndReviews.find( { "amenities": { "$all": [ "Free parking on premises", "Wifi", "Air conditioning" ] }, "bedrooms": { "$gte": 2 } } ).pretty() ```
+- [ ] ``` db.listingsAndReviews.find( { "amenities": [ "Free parking on premises", "Wifi", "Air conditioning" ]}, "bedrooms": { "$gte": 2 } } ).pretty() ```
 
 ### Lecture: Array Operators and Projection
 
@@ -715,7 +717,8 @@ Which of the following queries will return all listings that have "Free parking 
  $elemMatch can be used in the projetion part of the query.
  matches documents that contain an array field with at leas one element that meets the conditions.
 
- ### Lab: Array Operators and Projection
+### Lab: Array Operators and Projection
+
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
 How many companies in the sample_training.companies collection have offices in the city of Seattle?
@@ -729,20 +732,22 @@ db.companies.find({offices: {$elemMatch: {"city":"Seattle"}}}).count()
 Answer: **117**
 
 ### Quiz: Array Operators and Projection
+
 Which of the following queries will return only the names of companies from the sample_training.companies collection that had exactly 8 funding rounds?
 
-- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 0, "_id": 1 })```
-- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1 })```
-- [X] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1, "_id": 0 })```
+- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 0, "_id": 1 }) ```
+- [ ] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1 }) ```
+- [X] ``` db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1, "_id": 0 }) ```
 
 ### Lecture: Array Operators and Sub-Documents
+
 - Querying subdocuments.
 - Dot notation.
 - {"something.something": "lookedvalue"}
 - Also can access arrays by index
 
 ### Lab 1: Querying Arrays and Sub-Documents
- 
+
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
 Longitude decreases in value as you move west.
@@ -752,9 +757,11 @@ How many trips in the sample_training.trips collection started at stations that 
 ```js
 db.trips.find({"start station location.coordinates.0": {$lt:-74}}).count()
 ```
+
 Answer: **1928**
 
 ### Lab 2: Querying Arrays and Sub-Documents
+
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
 How many inspections from the sample_training.inspections collection were conducted in the city of NEW YORK?
@@ -762,15 +769,16 @@ How many inspections from the sample_training.inspections collection were conduc
 ```js
 db.inspections.find({"address.city":"NEW YORK"}).count()
 ```
+
 Answer: **18279**
 
 ### Quiz: Querying Arrays and Sub-documents
 
 Which of the following queries will return the names and addresses of all listings from the sample_airbnb.listingsAndReviews collection where the first amenity in the list is "Internet"?
 
-- [ ] ``` db.listingsAndReviews.find({ "amenities.[0]": Internet" , { "name": 1, "address": 1 }).pretty()```
-- [X] ``` db.listingsAndReviews.find({ "amenities.0": "Internet" }, { "name": 1, "address": 1 }).pretty()```
-- [ ] ``` db.listingsAndReviews.find({ "amenities.$0": "Internet" },{ "name": 1, "address": 1 }).pretty()```
+- [ ] ``` db.listingsAndReviews.find({ "amenities.[0]": Internet" , { "name": 1, "address": 1 }).pretty() ```
+- [X] ``` db.listingsAndReviews.find({ "amenities.0": "Internet" }, { "name": 1, "address": 1 }).pretty() ```
+- [ ] ``` db.listingsAndReviews.find({ "amenities.$0": "Internet" },{ "name": 1, "address": 1 }).pretty() ```
 
 ### CHAPTER 4 IDE
 
@@ -785,7 +793,7 @@ Query Operators - Comparison
 
 2. What is the difference between the number of people born in 1998 and the
    number of people born after 1998 in the sample_training.trips collection?
- 
+
 ```js
   db.trips.find({"birth year":1998}).count() // 12
   db.trips.find({"birth year": {$gt:1998}}).count() // 18
@@ -794,13 +802,11 @@ Query Operators - Comparison
 3. Using the sample_training.routes collection find out which of the
    following statements will return all routes that have at least one stop
    in them?
-   
- 
-- [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()``` 
+
+- [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
 - [x] ```db.routes.find({ "stops": { "$ne": 0 }}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$lt": 10 }}).pretty()```
-
 
 Query Operators - Logic
 
@@ -808,17 +814,19 @@ Query Operators - Logic
    inspection result "Out of Business" and belong to the Home Improvement
    Contractor - 100 sector?
 
-``` js 
+``` js
 db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"}).count()
 ```
+
 Answer: **4**
 
 2. How many zips in the sample_training.zips dataset are neither over-
    populated nor under-populated?In this case, we consider population over 1,000,000 to be over-populated and under 5,000 to be under-populated.
-   
+
    ```js
    db.zips.find({pop:{$gte:5000, $lt:1000000}}).count()
    ```
+
 Answer: **11193**
 
 3. How many companies in the sample_training.companies dataset were either
@@ -827,8 +835,8 @@ Answer: **11193**
 
 ``` js
 db.companies.find({$or:[{founded_year: 2004}, {founded_month: 10}], $or:[{category_code:"social"}, {category_code: "web"}]}).count()
-
 ```
+
 Answer: **1981**
 
 Expressive Query Operator
@@ -839,6 +847,7 @@ permalink as their twitter_username?
 ```js
 db.companies.find({$expr:{$eq:["$twitter_username", "$permalink"]}}).count()
 ```
+
 Answer: **1299**
 
 Array Operators
@@ -849,6 +858,7 @@ Array Operators
    ```js
     db.listingsAndReviews.find({accommodates:{$gt:6}, reviews:{$size:50}}, {name:1, _id:0})
    ```
+
 Answer: **Sunset Beach Lodge Retreat**
 
 2. How many documents have the property_type House, and include Changing
@@ -867,3 +877,50 @@ Array Operators and Sub-Documents
    stations that are to the west of the -74 latitude coordinate?
 2. How many inspections from the sample_training.inspections collection were
    conducted in the city of New York?
+
+## CHAPTER 5
+
+### Lecture: Aggregation framework
+
+- Another way to query data
+- We use aggregate instead of find.
+- In pipelines, the order is important.
+- Each stage of the pipeline works as a filter. Each filter should be finest than the previous one.
+- We can reshape the data
+- $group
+- Compute, reshape and reorganize data
+- In form of a pipeline
+  
+### Lab: Aggregation Framework
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+What room types are present in the sample_airbnb.listingsAndReviews collection?
+
+```js
+db.listingsAndReviews.aggregate({$group: {_id: "$room_type", count: {$sum: 1}}})
+```
+
+- [X] Shared room
+- [ ] Living room
+- [ ] Apartment
+- [ ] Kitchen
+- [X] Private room
+- [X] Entire home/apt
+- [ ] House
+
+### Quiz: Aggregation Framework
+
+What are the differences between using aggregate() and find()?
+
+- [X] aggregate() allows us to compute and reshape data in the cursor.
+- [ ] find() can do what the aggregate() can do and more.
+- [ ] find() allows us to compute and reshape data in the cursor.
+- [X] aggregate() can do what find() can and more.
+
+### Lecture: sort() and limit()
+
+- sort: 1 is ascending, -1 deschending.
+- sort and limit are cursor methods as well as pretty and count
+- limit without sort doesn't guarantee any order
+- mongo asummes that you meant to sort before limit.
