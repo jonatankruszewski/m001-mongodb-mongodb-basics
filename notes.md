@@ -108,11 +108,11 @@
 - Problems: Text-based, space consuming, limit on data types.
 - BSON: Binary JSON. Binary representation of JSON format.
 
-| PROP | JSON | BSON |
+| PROP         | JSON                           | BSON                                                                       |
 | :----------- | :----------------------------- | :------------------------------------------------------------------------- |
-| Encoding | UTF-8 | Binary |
+| Encoding     | UTF-8                          | Binary                                                                     |
 | Data Support | Strinb, boolean, number, array | String, Boolean, Number (Integer, Long, Float...), Array, Date, Raw Binary |
-| Readability | Human and machine | Machine Only |
+| Readability  | Human and machine              | Machine Only                                                               |
 
 BSON provides additionaly speed and accesibility.
 
@@ -136,10 +136,10 @@ Write BSON or JSON in the numbered blanks in the following sentences to make the
 
 - You can export / import both as BSON or JSON. Choos BSON for speed if you don't need to visulize it. Choose JSON if so.
 
-| PROP | JSON | BSON |
+| PROP   | JSON        | BSON         |
 | :----- | :---------- | :----------- |
 | IMPORT | mongoimport | mongorestore |
-| EXPORT | mongoexport | mongodump |
+| EXPORT | mongoexport | mongodump    |
 
 Exporting:
 
@@ -759,4 +759,87 @@ To complete this exercise connect to your Atlas cluster using the in-browser IDE
 
 How many inspections from the sample_training.inspections collection were conducted in the city of NEW YORK?
 
+```js
+db.inspections.find({"address.city":"NEW YORK"}).count()
+```
+Answer: **18279**
 
+### Quiz: Querying Arrays and Sub-documents
+
+Which of the following queries will return the names and addresses of all listings from the sample_airbnb.listingsAndReviews collection where the first amenity in the list is "Internet"?
+
+- [ ] ``` db.listingsAndReviews.find({ "amenities.[0]": Internet" , { "name": 1, "address": 1 }).pretty()```
+- [X] ``` db.listingsAndReviews.find({ "amenities.0": "Internet" }, { "name": 1, "address": 1 }).pretty()```
+- [ ] ``` db.listingsAndReviews.find({ "amenities.$0": "Internet" },{ "name": 1, "address": 1 }).pretty()```
+
+### CHAPTER 4 IDE
+
+Query Operators - Comparison
+
+1. How many documents in the sample_training.zips collection have fewer than
+   1000 people listed in the pop field?
+
+   ```js
+    db.zips.find({"pop":{$lt: 1000}}).count()
+   ```
+
+2. What is the difference between the number of people born in 1998 and the
+   number of people born after 1998 in the sample_training.trips collection?
+ 
+```js
+  db.trips.find({"birth year":1998}).count() // 12
+  db.trips.find({"birth year": {$gt:1998}}).count() // 18
+ ```
+
+3. Using the sample_training.routes collection find out which of the
+   following statements will return all routes that have at least one stop
+   in them?
+   
+ 
+- [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()``` 
+- [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
+- [x] ```db.routes.find({ "stops": { "$ne": 0 }}).pretty()```
+- [ ] ```db.routes.find({ "stops": { "$lt": 10 }}).pretty()```
+
+
+Query Operators - Logic
+
+1. How many businesses in the sample_training.inspections dataset have the
+   inspection result "Out of Business" and belong to the Home Improvement
+   Contractor - 100 sector?
+
+   `
+2. How many zips in the sample_training.zips dataset are neither over-
+   populated nor under-populated?
+
+   In this case, we consider population over 1,000,000 to be over-populated
+   and under 5,000 to be under-populated.
+3. How many companies in the sample_training.companies dataset were either
+   founded in 2004, or in the month of October and either have the social
+   category_code or web category_code?
+
+Expressive Query Operator
+
+How many companies in the sample_training.companies collection have the same
+permalink as their twitter_username?
+
+Array Operators
+
+1. What is the name of the listing in the sample_airbnb.listingsAndReviews
+   dataset accommodate more than 6 people and has exactly 50 reviews?
+2. How many documents have the property_type House, and include Changing
+   table as one of the amenities?
+
+Array Operators and Projection
+
+How many companies in the sample_training.companies collection have offices
+in the city of Seattle?
+
+Array Operators and Sub-Documents
+
+1. Latitude decreases in value as you move west.
+
+   How many trips in the sample_training.trips collection started at
+   stations that are to the west of the -74 latitude coordinate?
+2. How many inspections from the sample_training.inspections collection were
+   conducted in the city of New York?
