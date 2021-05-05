@@ -410,16 +410,10 @@ Given a pets collection where each document has the following structure and fiel
 
 Which of the following commands will add new fields to the updated documents?
 
-- [X] ```db.pets.updateMany({ "pet": "cat"},
- { "$push": { "climate": "continental",
- "look": "adorable"}})```
-- [ ] ```db.pets.updateMany({ "pet": "cat"},
- { "$set": { "domestic?": true, "diet": "mice"}})```
-- [X] ```db.pets.updateMany({ "pet": "cat"},
- { "$set": { "type": "dangerous",
- "look": "adorable"}})```
-- [ ] ```db.pets.updateMany({ "pet": "cat"},
- { "$set": { "climate": "continental"}})```
+- [X] ``` db.pets.updateMany({ "pet": "cat"}, { "$push": { "climate": "continental","look": "adorable"}}) ```
+- [ ] ``` db.pets.updateMany({ "pet": "cat"}, { "$set": { "domestic?": true, "diet": "mice"}}) ```
+- [X] ``` db.pets.updateMany({ "pet": "cat"}, { "$set": { "type": "dangerous", "look": "adorable"}}) ```
+- [ ] ``` db.pets.updateMany({ "pet": "cat"}, { "$set": { "climate": "continental"}})``
 
 ### Lecture: Deleting Documents and Collections
 
@@ -504,18 +498,7 @@ How many documents in the sample_training.zips collection have fewer than 1000 p
 Copy/paste the exact numeric value of the result that you get into the response field.
 
 ```js
-const pipeline = [
- {
- '$match': {
- 'pop': {
- '$lt': 1000
-}
-}
-}, {
- '$count': 'amount'
-}
-];
-
+const pipeline = [ { '$match': { 'pop': { '$lt': 1000 }}}, { '$count': 'amount'}];
 use sample_training
 db.zips.aggregate(pipeline)
 ```
@@ -530,7 +513,6 @@ Copy/paste the exact numeric value of the result that you get into the response 
 
 ```js
 const pipeline = [{ '$match': { 'pop': { '$lt': 1000}}}, { '$count': 'amount'}];
-
 use sample_training
 db.zips.aggregate(pipeline)
 ```
@@ -544,31 +526,7 @@ What is the difference between the number of people born in 1998 and the number 
 Enter the exact numeric value of the result that you get into the response field.
 
 ```js
-const pipeline = [
- {
- '$match': {
- 'birth year': {
- '$gte': 1998
-}}}, {
- '$group': {
- '_id': {
- '$cond': {
- 'if': {
- '$gt': [
- '$birth year', 1998
- ]
-}, 
- 'then': 'greater than 1998', 
- 'else': '1998'
-}
-}, 
- 'count': {
- '$sum': 1
-}
-}
-}
-]
-
+const pipeline = [ { '$match': { 'birth year': { '$gte': 1998}}}, { '$group': { '_id': { '$cond': { 'if': { '$gt': [ '$birth year', 1998 ]},  'then': 'greater than 1998',  'else': '1998'}},  'count': { '$sum': 1}}}]
 use sample_training
 db.trips.aggregate(pipeline)
 ```
@@ -631,48 +589,13 @@ In this case, we consider population of more than 1,000,000 to be over- populate
 Copy/paste the exact numeric value of the result that you get into the response field.
 
 ```js
-
 db.zips.find({$nor:[{'pop':{$lt:5000}},{'pop':{$gt:1000000}}]}).count()
-
 ```
 
 Another way:
 ```js
-const pipeline = [
- {
- '$group': {
- '_id': {
- '$switch': {
- 'branches': [
- {
- 'case': {
- '$or': [
- {
- '$lt': [
- '$pop', 5000
- ]
- }, {
- '$gt': [
- '$pop', 1000000
- ]
- }
- ]
- }, 
- 'then': 'over and under Populated'
- }
- ], 
- 'default': 'well populated'
- }
- }, 
- 'amount': {
- '$sum': 1
- }
- }
- }
-]
-
+const pipeline = [ { '$group': { '_id': { '$switch': { 'branches': [ { 'case': { '$or': [ { '$lt': [ '$pop', 5000  }, { '$gt':  '$pop', 1000000 ] } ] },  'then': 'over and under Populated' } ],  'default': 'well populated' } },  'amount': { '$sum': 1 } }]
 db.zips.aggregate(pipeline)
-
 ```
 Should retrieve back **11193**.
 
