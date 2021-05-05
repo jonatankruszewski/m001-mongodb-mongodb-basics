@@ -86,13 +86,13 @@
 - Click on connect with the mongo shell
 - Grab the link. Should look like:
 
-  `mongo "mongodb+srv://something.something.mongodb.net/myFirstDatabase" --username m001-student`
+ `mongo "mongodb+srv://something.something.mongodb.net/myFirstDatabase" --username m001-student`
 
 - Go back to the lab and paste it on the terminal
 - Input your password
 - Your terminal in the shell should look like something:
 
-  ```MongoDB Enterprise atlas-4phot5-shard-0:PRIMARY>```
+ ```MongoDB Enterprise atlas-4phot5-shard-0:PRIMARY>```
 
 - Click on RUN TEST
 
@@ -108,11 +108,11 @@
 - Problems: Text-based, space consuming, limit on data types.
 - BSON: Binary JSON. Binary representation of JSON format.
 
-| PROP         | JSON                           | BSON                                                                       |
+| PROP | JSON | BSON |
 | :----------- | :----------------------------- | :------------------------------------------------------------------------- |
-| Encoding     | UTF-8                          | Binary                                                                     |
+| Encoding | UTF-8 | Binary |
 | Data Support | Strinb, boolean, number, array | String, Boolean, Number (Integer, Long, Float...), Array, Date, Raw Binary |
-| Readability  | Human and machine              | Machine Only                                                               |
+| Readability | Human and machine | Machine Only |
 
 BSON provides additionaly speed and accesibility.
 
@@ -136,10 +136,10 @@ Write BSON or JSON in the numbered blanks in the following sentences to make the
 
 - You can export / import both as BSON or JSON. Choos BSON for speed if you don't need to visulize it. Choose JSON if so.
 
-| PROP   | JSON        | BSON         |
+| PROP | JSON | BSON |
 | :----- | :---------- | :----------- |
 | IMPORT | mongoimport | mongorestore |
-| EXPORT | mongoexport | mongodump    |
+| EXPORT | mongoexport | mongodump |
 
 Exporting:
 
@@ -183,8 +183,8 @@ To solve:
 - Go to sample_training DB
 - Go to trips collections
 - In the filter input:
-  
-    ```{"birth year":1961, "start station name": "Howard St & Centre St"}```
+ 
+ ```{"birth year":1961, "start station name": "Howard St & Centre St"}```
 
 - You should get a document which ending station is "South End Ave & Liberty St"
 
@@ -230,52 +230,52 @@ Which of the following statements are true about the mongo shell?
 
 0. Using the sample_training.inspections collection find out how many inspections were conducted on Feb 20 2015.
 
-   ```js
-   db.inspections.find({"date":"Feb 20 2015"}).count()
-   ```
+ ```js
+ db.inspections.find({"date":"Feb 20 2015"}).count()
+ ```
 
-   - Answer: 320 inspections
+ - Answer: 320 inspections
 1. Query the zips collection from the sample_training database to find all documents where the state is New York.
 
-   ```js
-   db.zips.find({"state": "NY"}).count()
-   ```
+ ```js
+ db.zips.find({"state": "NY"}).count()
+ ```
 
-   - Answer: 1596
+ - Answer: 1596
 2. Iterate through the query results.
 
-      ```js
-      it
-      ```
+ ```js
+ it
+ ```
 
 3. Find out how many ZIP codes there are in NY state.
 
-   ```js
-   db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
-   ```
+ ```js
+ db.zips.aggregate({$match: {"state":"NY"}},{$group:{_id:"$zip"}},{$count:"total_zip_codes"})
+ ```
 
-   - Answer: 1596
+ - Answer: 1596
 
 4. What about the ZIP codes that are in NY but also in the city of Albany?
 
-   ```js
-   db.zips.aggregate([
-   {
-      '$match': {
-         'state': 'NY', 
-         'city': 'ALBANY'
-      }
-   }, {
-      '$count': 'Zip codes in Albany and NY'
-   }
-   ])
-   ```
+ ```js
+ db.zips.aggregate([
+ {
+ '$match': {
+ 'state': 'NY', 
+ 'city': 'ALBANY'
+ }
+ }, {
+ '$count': 'Zip codes in Albany and NY'
+ }
+ ])
+ ```
 
-   - Answer: 7
+ - Answer: 7
 
 5. Make the cursor look more readable.
-   - .pretty()
-  
+ - .pretty()
+ 
 ## CHAPTER 3: CREATING AND UPDATING VALUES
 
 ### Inserting New Documents - ObjectID
@@ -316,16 +316,16 @@ Select all true statements from the following list:
 - Will treive:
 
 ```js
-   bulkWriteResut({
-      "writeErros":[],
-      "nInserted": 3
-      "nUpserted": 0,
-      "nMatched": 0,
-      "nModified": 0,
-      "nRemoved": 0,
-      "upserted": []
-   })
-  ```
+ bulkWriteResut({
+ "writeErros":[],
+ "nInserted": 3
+ "nUpserted": 0,
+ "nMatched": 0,
+ "nModified": 0,
+ "nRemoved": 0,
+ "upserted": []
+ })
+ ```
 
 - When inserting many documents, if an error ocurrers, the documents afterwards wont be inserted.
 - To change that add this option at the end: {"ordered": false}.
@@ -338,18 +338,18 @@ Which of the following commands will successfully insert 3 new documents into an
 - [X] ```db.pets.insert([{ "pet": "cat" }, { "pet": "dog" },{ "pet": "fish" }])```
 
 - [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },{ "_id": 1, "pet": "dog" },
-                { "_id": 3, "pet": "fish" },
-                { "_id": 4, "pet": "snake" }], { "ordered": false })```
+ { "_id": 3, "pet": "fish" },
+ { "_id": 4, "pet": "snake" }], { "ordered": false })```
 
 - [X] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
-                { "_id": 2, "pet": "dog" },
-                { "_id": 3, "pet": "fish" },
-                { "_id": 3, "pet": "snake" }])```
-  
+ { "_id": 2, "pet": "dog" },
+ { "_id": 3, "pet": "fish" },
+ { "_id": 3, "pet": "snake" }])```
+ 
 - [ ] ```db.pets.insert([{ "_id": 1, "pet": "cat" },
-                { "_id": 1, "pet": "dog" },
-                { "_id": 3, "pet": "fish" },
-                { "_id": 4, "pet": "snake" }], { "ordered": true })```
+ { "_id": 1, "pet": "dog" },
+ { "_id": 3, "pet": "fish" },
+ { "_id": 4, "pet": "snake" }], { "ordered": true })```
 
 ### Lecture: Updating Documents - Data Explorer
 
@@ -362,26 +362,26 @@ MongoDB has a flexible data model, which means that you can have fields that con
 Select any invalid MongoDB documents from the given choices:
 
 - [ ] ```{ "_id": 1,
-  "pet": "cat",
-  "attributes": [ { "coat": "fur",
-                    "type": "soft" },
-                  { "defense": "claws",
-                    "location": "paws",
-                    "nickname": "murder mittens" } ],
-  "name": "Furball" }```
+ "pet": "cat",
+ "attributes": [ { "coat": "fur",
+ "type": "soft" },
+ { "defense": "claws",
+ "location": "paws",
+ "nickname": "murder mittens" } ],
+ "name": "Furball" }```
 
 - [ ] ```{ "_id": 1,
-  "pet": "cat",
-  "fur": "soft",
-  "claws": "sharp",
-  "name": "Furball" }```
+ "pet": "cat",
+ "fur": "soft",
+ "claws": "sharp",
+ "name": "Furball" }```
 
 - [ ] ```{ "_id": 1,
-  "pet": "cat",
-  "attributes": { "coat": "soft fur",
-                  "paws": "cute but deadly" },
-  "name": "Furball" }```
-  
+ "pet": "cat",
+ "attributes": { "coat": "soft fur",
+ "paws": "cute but deadly" },
+ "name": "Furball" }```
+ 
 - [X] None of the Above
 
 ### Lecture: Updating Documents - mongo shell
@@ -411,15 +411,15 @@ Given a pets collection where each document has the following structure and fiel
 Which of the following commands will add new fields to the updated documents?
 
 - [X] ```db.pets.updateMany({ "pet": "cat" },
-                   { "$push": { "climate": "continental",
-                                "look": "adorable" } })```
+ { "$push": { "climate": "continental",
+ "look": "adorable" } })```
 - [ ] ```db.pets.updateMany({ "pet": "cat" },
-                   { "$set": { "domestic?": true, "diet": "mice" } })```
+ { "$set": { "domestic?": true, "diet": "mice" } })```
 - [X] ```db.pets.updateMany({ "pet": "cat" },
-                   { "$set": { "type": "dangerous",
-                               "look": "adorable" } })```
+ { "$set": { "type": "dangerous",
+ "look": "adorable" } })```
 - [ ] ```db.pets.updateMany({ "pet": "cat" },
-                   { "$set": { "climate": "continental" } })```
+ { "$set": { "climate": "continental" } })```
 
 ### Lecture: Deleting Documents and Collections
 
@@ -452,19 +452,19 @@ Which of the following commands will delete a collection named villains?
 
 1. Get a random document from a collection
 
-   ```js
-   db.collection.findOne()
-   ```
+ ```js
+ db.collection.findOne()
+ ```
 
 2. Copy this random document, and insert it back to the collection. Do you get
-   a "Duplicate Key" error?
+ a "Duplicate Key" error?
 
-   - Answer: yes.
+ - Answer: yes.
 
 3. Insert that document into the collection without the _id field to get a
-   successfull insert. Did it work?
+ successfull insert. Did it work?
 
-   - Answer: yes.
+ - Answer: yes.
 
 Practice Question:
 
@@ -505,15 +505,15 @@ Copy/paste the exact numeric value of the result that you get into the response 
 
 ```js
 const pipeline = [
-  {
-    '$match': {
-      'pop': {
-        '$lt': 1000
-      }
-    }
-  }, {
-    '$count': 'amount'
-  }
+ {
+ '$match': {
+ 'pop': {
+ '$lt': 1000
+ }
+ }
+ }, {
+ '$count': 'amount'
+ }
 ];
 
 use sample_training
@@ -530,15 +530,15 @@ Copy/paste the exact numeric value of the result that you get into the response 
 
 ```js
 const pipeline = [
-  {
-    '$match': {
-      'pop': {
-        '$lt': 1000
-      }
-    }
-  }, {
-    '$count': 'amount'
-  }
+ {
+ '$match': {
+ 'pop': {
+ '$lt': 1000
+ }
+ }
+ }, {
+ '$count': 'amount'
+ }
 ];
 
 use sample_training
@@ -555,30 +555,30 @@ Enter the exact numeric value of the result that you get into the response field
 
 ```js
 const pipeline = [
-  {
-    '$match': {
-      'birth year': {
-        '$gte': 1998
-      }
-    }
-  }, {
-    '$group': {
-      '_id': {
-        '$cond': {
-          'if': {
-            '$gt': [
-              '$birth year', 1998
-            ]
-          }, 
-          'then': 'greater than 1998', 
-          'else': '1998'
-        }
-      }, 
-      'count': {
-        '$sum': 1
-      }
-    }
-  }
+ {
+ '$match': {
+ 'birth year': {
+ '$gte': 1998
+ }
+ }
+ }, {
+ '$group': {
+ '_id': {
+ '$cond': {
+ 'if': {
+ '$gt': [
+ '$birth year', 1998
+ ]
+ }, 
+ 'then': 'greater than 1998', 
+ 'else': '1998'
+ }
+ }, 
+ 'count': {
+ '$sum': 1
+ }
+ }
+ }
 ]
 
 use sample_training
@@ -620,12 +620,29 @@ Will return 4.
 
 Which is the most succinct query to return all documents from the sample_training.inspections collection where the inspection date is either "Feb 20 2015", or "Feb 21 2015" and the company is not part of the "Cigarette Retail Dealer - 127" sector?
 
+- [X] ```db.inspections.find( { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" } ], "sector": { "$ne": "Cigarette Retail Dealer - 127" }}).pretty()```
+- [ ] ```db.inspections.find( { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" }], "$not": { "sector": "Cigarette Retail Dealer - 127" }}).pretty()```
+- [ ] ```db.inspections.find( { "$and": [ { "$or": [ { "date": "Feb 20 2015" }, { "date": "Feb 21 2015" } ] }, {"s ector": { "$ne":"Cigarette Retail Dealer - 127" }}]}).pretty()```
+
+$not operator on this one is not used properly.
+
+### Lab 1: Logic Operators
+
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+
+Before solving this exercise, make sure to undo some of the changes that we made to the zips collection earlier in the course by running the following command:
+
 ```js
-use sample_training
-db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"})
+db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": -10 } })
 ```
 
-Will return 4.
+How many zips in the sample_training.zips dataset are neither over-populated nor under-populated?
+
+In this case, we consider population of more than 1,000,000 to be over- populated and less than 5,000 to be under-populated.
+
+Copy/paste the exact numeric value of the result that you get into the response field.
+
+
 
 
 
