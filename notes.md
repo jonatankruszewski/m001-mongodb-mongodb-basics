@@ -1030,3 +1030,55 @@ Create two separate indxes to support the following queries:
 db.trips.find({"birth year": 1989})
 
 db.trips.find({"start station id": 476}).sort("birth year": 1)
+
+### CHAPTER 6 Next steps
+
+- Indexes on atlas: we can create an idex, how often they are used, etc
+- Aggregation: create our pipeline with ui
+
+### Quiz: Atlas Features
+
+What actions are available to you via the Aggregation Builder in the Atlas Data Explorer?
+
+- [X] A preview of the data in the pipeline at each selected stage.
+- [X] Export pipeline to a programming language.
+- [ ] An indication of which indexes are used by the pipeline.
+- [X] Syntax for each selected aggregation stage.
+
+### ATLAS ACCESS
+
+- GROUP PROJECT TEAMS
+- Users can gr grouped in teams
+- Realm
+- Chart
+
+### QUIZ
+
+What is MongoDB Charts?
+
+- [x] A product that helps you build visualizations of the data stored in your Atlas Cluster.
+- [ ] A feature that displays performance data about your Atlas Cluster.
+- [ ] An app that allows you to embed visualizations that are created in other applications into your website.
+
+### Lecture: What is mongoDB Compass
+
+- Adming config local, never touch them unless specified by support
+- More features than atlas
+- Explain plan
+- More views
+- More options on find
+- Schema: allows to see summary values and types
+  
+### QUIZ: Compass
+
+What is MongoDB Compass?
+
+- [ ] A type of map-based chart that is available with MongoDB Charts
+- [X] MongoDB's Graphical User Interface Product
+- [ ] A term used to denote an object that stores geospatial coordinates in the collection.
+
+### Lecture: What is mongoDB Compass 2
+
+- Explain
+- Validation
+- Schema
