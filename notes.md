@@ -642,10 +642,7 @@ What are some of the uses for the $ sign in MQL?
 
 Which of the following statements will find all the companies that have more employees than the year in which they were founded?
 
-- [x]
-```js
- db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count()
-```
+- [x] ``` db.companies.find( { "$expr": { "$gt": [ "$number_of_employees", "$founded_year" ]} } ).count() ```
 - [ ] ``` db.companies.find( { "$expr": { "$gt": [ "$founded_year", "number_of_employees" ] } }).count() ```
 - [X] ``` db.companies.find( { "$expr": { "$lt": [ "$founded_year","$number_of_employees" ] } } ).count()```
 - [ ] ``` db.companies.find({ "number_of_employees": { "$gt": "$founded_year" } }).count() ```
