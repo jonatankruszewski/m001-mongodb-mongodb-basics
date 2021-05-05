@@ -598,8 +598,34 @@ Using the sample_training.routes collection find out which of the following stat
 - [X] ```db.routes.find({ "stops": { "$gt": 0 }}).pretty()```
 - [ ] ```db.routes.find({ "stops": { "$gte": 0 }}).pretty()```
 
+ Lecture: Query Operator - Logic
  
+ $and: All of the query clauses - present on queries by default.
+ $or: any of the query clauses
+ $nor: fails to match both clauses (not and or together)
+ $not: Negates the query requirements.
 
+Explicit $and operator when we need to use it more than once in a query.
+
+### Quiz 1: Logic Operators
+
+```js
+use sample_training
+db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"})
+```
+
+Will return 4.
+
+### Quiz 2: Logic Operators
+
+Which is the most succinct query to return all documents from the sample_training.inspections collection where the inspection date is either "Feb 20 2015", or "Feb 21 2015" and the company is not part of the "Cigarette Retail Dealer - 127" sector?
+
+```js
+use sample_training
+db.inspections.find({result: "Out of Business", sector:"Home Improvement Contractor - 100"})
+```
+
+Will return 4.
 
 
 
