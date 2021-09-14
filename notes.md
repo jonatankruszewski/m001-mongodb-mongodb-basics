@@ -30,9 +30,9 @@
 
 ### Quiz 2: What is a Document?
 
-- [x] Collections are documents that are organized in rows and columns.
-- [x] Documents are made up of collections.
-- [x] Collections are tables of documents and other collections.
+- [ ] Collections are documents that are organized in rows and columns.
+- [ ] Documents are made up of collections.
+- [ ] Collections are tables of documents and other collections.
 - [x] Collections consist of one or many documents.
 
 ### Quiz 3: What is a Document?
@@ -563,7 +563,7 @@ Which is the most succinct query to return all documents from the sample_trainin
 
 - [X] ```db.inspections.find( { "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}], "sector": { "$ne": "Cigarette Retail Dealer - 127"}}).pretty()```
 - [ ] ```db.inspections.find( { "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}], "$not": { "sector": "Cigarette Retail Dealer - 127"}}).pretty()```
-- [ ] ```db.inspections.find( { "$and": [{ "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}]}, {"s ector": { "$ne":"Cigarette Retail Dealer - 127"}}]}).pretty()```
+- [ ] ```db.inspections.find( { "$and": [{ "$or": [{ "date": "Feb 20 2015"}, { "date": "Feb 21 2015"}]}, {"sector": { "$ne":"Cigarette Retail Dealer - 127"}}]}).pretty()```
 
 $not operator on this one is not used properly.
 
@@ -600,14 +600,11 @@ Should retrieve back **11193**.
 
 To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
 
-How many companies in the sample_training.companies dataset were
-
-either founded in 2004
-
+How many companies in the sample_training.companies dataset were either founded in 2004
 [ and ] either have the social category_code [ or ] web category_code,
 [ or ] were founded in the month of October
-
 [ and ] also either have the social category_code [ or ] web category_code?
+
 Copy/paste the exact numeric value of the result that you get into the response field.
 
 ```js
